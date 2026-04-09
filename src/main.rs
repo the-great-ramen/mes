@@ -1,6 +1,5 @@
 mod byte;
-mod cpu;
-
+mod CPU;
 fn main() {
     println!("Hello, world!");
 }
