@@ -61,7 +61,7 @@ impl CpuMemory
         // Controller port 2
         if address == 0x4017
         {
-            return self.controllers[0].on_read();
+            return self.controllers[1].on_read();
         }
 
         // Cartridge space (PRG-ROM, mapper, etc.)
