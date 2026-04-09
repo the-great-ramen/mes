@@ -1,6 +1,7 @@
-use MES::{Cpu,};
+use MES::{Cpu,CpuMemory,};
 
 fn main() {
-    let _cpu = Cpu::new();
+    let _memory: CpuMemory = CpuMemory::new();
+    let _cpu = Cpu::new(_memory);
     println!("Hello, world!");
 }

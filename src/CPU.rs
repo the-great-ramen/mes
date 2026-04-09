@@ -1,8 +1,9 @@
 use crate::byte;
+use crate::cpu_memory;
 
 pub struct Cpu
 {
-    //pub memory: CpuMemory,
+    pub memory: cpu_memory::CpuMemory,
     pub cycle: u32,
     pub extra_cycles: u32,
     pub a: Register8Bit,
@@ -16,7 +17,7 @@ pub struct Cpu
 
 impl Cpu
 {
-    pub fn new(/*memory: CpuMemory*/) -> Self
+    pub fn new(memory: cpu_memory::CpuMemory) -> Self
     {
         let sp = Register8Bit::new();
         Cpu
@@ -30,7 +31,7 @@ impl Cpu
             sp,
             pc: Register16Bit::new(),
             flags: FlagsRegister::new(),
-            //memory,
+            memory,
         }
     }
 }
