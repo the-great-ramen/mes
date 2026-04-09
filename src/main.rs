@@ -1,4 +1,4 @@
-use MES::{Cpu,CpuMemory,};
+use mes::{Cpu,CpuMemory,};
 
 fn main() {
     let _memory: CpuMemory = CpuMemory::new();
