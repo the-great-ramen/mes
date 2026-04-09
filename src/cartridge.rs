@@ -1,5 +1,3 @@
-use crate::byte;
-
 enum MirroringType
 {
     Vertical,
