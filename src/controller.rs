@@ -13,7 +13,6 @@ pub struct Controller
 {
     strobe: bool,
     cursor: usize,
-    //other: Box<Option<Controller>>,
     _player: u8,
     _buttons: [bool; 8],
 }
@@ -26,7 +25,6 @@ impl Controller
         {
             strobe: false,
             cursor: 0,
-            //other: Box::new(None),
             _player: player,
             _buttons: [false,false,false,false,false,false,false,false],
         }
@@ -50,33 +48,9 @@ impl Controller
     }
     pub fn on_write(&mut self, value: u8)
     {
-        if self._player != 1 {return;}
-
         let strobe_on: bool = (value & 1) == 1;
 
-        if strobe_on
-        {
-            self.strobe = true;
-            self.cursor = 0;
-            /*
-            if self.other
-            {
-                self.other.strobe = true;
-                self.other.cursor = 0;
-            }
-            */
-        }
-        else
-        {
-            self.strobe = false;
-            self.cursor = 0;
-            /*
-            if self.other
-            {
-                self.other.strobe = false;
-                self.other.cursor = 0;
-            }
-            */
-        }
+        self.strobe = strobe_on;
+        self.cursor = 0;
     }
 }

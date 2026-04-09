@@ -1,5 +1,5 @@
 use crate::byte;
-use crate::controller;
+use crate::controller::Controller;
 
 pub struct CpuMemory
 {
@@ -7,7 +7,7 @@ pub struct CpuMemory
     //ppu:,
     //apu:,
     //mapper:,
-    controllers: [Option<controller::Controller>; 2],
+    controllers: [Controller;2],
 }
 
 impl CpuMemory
@@ -17,10 +17,10 @@ impl CpuMemory
         CpuMemory 
         {
             ram: [0;2048],
-            controllers: [None,None],
+            controllers: [Controller::new(1),Controller::new(2)],
         }
     }
-    pub fn read(&self, address: u16) -> u8
+    pub fn read(&mut self, address: u16) -> u8
     {
         //WRAM (2 KiB)
         if address <= 0x07FF
@@ -55,13 +55,13 @@ impl CpuMemory
         // Controller port 1
         if address == 0x4016
         {
-            //return self.controllers[0].as_mut().unwrap().onRead();
+            return self.controllers[0].on_read();
         }
 
         // Controller port 2
         if address == 0x4017
         {
-            /* TODO: IMPLEMENT CONTROLLER */
+            return self.controllers[0].on_read();
         }
 
         // Cartridge space (PRG-ROM, mapper, etc.)
@@ -109,13 +109,14 @@ impl CpuMemory
         // Controller port 1
         if address == 0x4016
         {
-            /* TODO: IMPLEMENT CONTROLLER */
+            self.controllers[0].on_write(value);
+            self.controllers[1].on_write(value);
         }
 
-        // Controller port 2
+
         if address == 0x4017
         {
-            /* TODO: IMPLEMENT CONTROLLER */
+            /* TODO: IMPLEMENT */
         }
 
         // Cartridge space (PRG-ROM, mapper, etc.)
@@ -124,14 +125,14 @@ impl CpuMemory
             /* TODO: IMPLEMENT MAPPER */
         }
     }
-    pub fn on_load(&mut self, controllers: [Option<controller::Controller>;2])
+    pub fn on_load(&mut self, controllers: [Controller; 2])
     {
         //self.ppu = ppu;
         //self.apu = apu;
         //self.mapper = mapper;
         self.controllers = controllers;
     }
-    pub fn read16(&self, address: u16) -> u16
+    pub fn read16(&mut self, address: u16) -> u16
     {
         return byte::build_u16(self.read(address+1),self.read(address));
     }
