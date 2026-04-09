@@ -13,7 +13,7 @@ pub struct Controller
 {
     strobe: bool,
     cursor: usize,
-    other: Box<Option<Controller>>,
+    //other: Box<Option<Controller>>,
     _player: u8,
     _buttons: [bool; 8],
 }
@@ -26,7 +26,7 @@ impl Controller
         {
             strobe: false,
             cursor: 0,
-            other: Box::new(None),
+            //other: Box::new(None),
             _player: player,
             _buttons: [false,false,false,false,false,false,false,false],
         }
@@ -36,7 +36,7 @@ impl Controller
         let index: usize= BUTTONS.iter().position(|&b| b == button).unwrap();
         self._buttons[index] = is_pressed;
     }
-    pub fn onRead(&mut self) -> u8
+    pub fn on_read(&mut self) -> u8
     {
         if self.strobe
         {
@@ -48,13 +48,13 @@ impl Controller
         self.cursor += 1;
         return value;
     }
-    pub fn onWrite(&mut self, value: u8)
+    pub fn on_write(&mut self, value: u8)
     {
         if self._player != 1 {return;}
 
-        let strobeOn: bool = (value & 1) == 1;
+        let strobe_on: bool = (value & 1) == 1;
 
-        if strobeOn
+        if strobe_on
         {
             self.strobe = true;
             self.cursor = 0;
